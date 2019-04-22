@@ -1,0 +1,60 @@
+What is Jenkins?
+----------------
+
+A tool for automation. 
+
+* [x] Continuous Integration (CI)
+* [x] Continuous Delivery (CD)
+* [x] ... others (Backups, Deployments, Cron jobs, ...)
+
+
+[[jenkins-master]]
+What is a Jenkins Master ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [x] The node where Jenkins itself runs (the web application)  
+* [x] The node that is responsible for scheduling your jobs. 
+* [ ] NOT the place where your jobs run (...but can be).
+* [ ] NOT horizontally scalable. If you do want multiple jenkins masters, you have to figure out your own way to distribute jobs between them. 
+
+
+[[jenkins-slave]]
+What is a Jenkins Slave ?
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [x] The node in which your jobs should run (in executors, see below)
+* [x] A container, VM or bare metal server, depending on your setup.
+* [x] Horizontally scalable! If you need to run multiple jobs, you can simply spin up more slaves. In fact, you can have different types of slaves per job (you use "labels" to match jobs with slaves) and only spin up slaves suitable for the specific kind of job under load.
+* [ ] NOT a mirror of the Jenkins master. A better name could be: "worker node".
+
+[[jenkins-executor]]
+What is a Jenkins Executor ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [x] The runtime for every job. 
+* [ ] NOT 1:1 mapped to each slave. Each slave can have `N` executors. 
+
+[[jenkins-x]]
+What is JenkinsX ?
+~~~~~~~~~~~~~~~~~~
+
+* [x] Jenkins for Kubernetes. 
+
+
+[[jenkins-serverless]]
+What is JenkinsX Serverless ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [x] Jenkins without the web app. 
+* [x] Needs kubernetes. At some point a container spins up and runs the Groovy code in your Jenkinsfile.
+* [x] Jenkins "as code".
+
+
+[[cloudbees]]
+What is CloudBees?
+~~~~~~~~~~~~~~~~~~
+
+* [x] The biggest corporate sponsor behind Jenkins. 
+* [ ] NOT the company that owns Jenkins. Jenkins itself is Open Source Software (https://jenkins.io/license/[MIT License]). You host / run it yourself. 
+
+Cloudbees offers its own "version" of Jenkins + sells support / hosting for Jenkins. 
