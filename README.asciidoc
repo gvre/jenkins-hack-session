@@ -1,0 +1,7 @@
+# Jenkins Basics: A Hack Session
+
+A workshop that will get you started with running pipelines on Jenkins. 
+
+## Step 1: What is Jenkins
+
+https://github.com/gvre/jenkins-hack-session/blob/master/what_is_jenkins.asciidoc[Read more]
