@@ -5,3 +5,14 @@ A workshop that will get you started with running pipelines on Jenkins.
 ## Step 1: What is Jenkins
 
 https://github.com/gvre/jenkins-hack-session/blob/master/what_is_jenkins.asciidoc[Read more]
+
+## Step 2: Declarative vs Scripted pipelines
+
+## Step 3: Global Variables
+https://github.com/gvre/jenkins-hack-session/blob/master/global-variables.asciidoc[Read more]
+
+## Step 4: Credentials
+
+## Step 5: Build applications using Docker
+
+## Step 6: Deploy using Ansible

@@ -1,0 +1,140 @@
+## Global Variables
+
+### Overview
+Global variables are available in Pipeline directly, not as steps. They expose methods and variables to be accessed within your Pipeline 
+script.
+ 
+### environment
+The environment directive specifies a sequence of key-value pairs which will be defined as environment variables for the all steps, or stage-specific steps, depending on where the environment directive is located within the Pipeline.
+
+Environment variables are accessible from Groovy code as `env.VARNAME` or simply as `VARNAME`. You can write to such properties as well (only using the `env.` prefix): 
+
+- An `environment` directive used in the top-level pipeline block will apply to all steps within the Pipeline.
+- An `environment` directive defined within a `stage` will only apply the given environment variables to steps within the stage.
+- The `environment` block has a helper method `credentials()` defined which can be used to access pre-defined Credentials by their identifier in the Jenkins environment.
+
+```
+pipeline {
+    agent any
+    
+    environment {
+        FOO="foo"
+    }
+    
+    stages {
+        stage('test') {
+            steps {
+                script {
+                    def bar = "bar"
+                    println("bar: $bar")
+                }
+                
+                println('single quotes w/o env: ${FOO}')
+                println('single quotes with env: ${env.FOO}')
+                
+                println("double quotes w/o env: ${FOO}")
+                println("double quotes with env: ${env.FOO}")
+                
+                sh 'echo $FOO'
+                // sh 'echo ${env.FOO}' // doesn't work
+                
+                sh "echo ${FOO}"
+                sh "echo ${env.FOO}"
+                
+                sh '''
+                    echo "${FOO}"
+                '''
+                
+                sh """
+                    echo "${FOO}"
+                """
+                
+                sh '''
+                    v="$(ls)"
+                    echo "ls single quotes multi-line: $v"
+                '''
+                
+                sh """
+                    v="\$(ls)"
+                    echo "ls double quotes multi-line: \$v"
+                """
+            }
+        }
+    }
+}
+```
+
+**Result**
+
+```
+bar: bar
+single quotes w/o env: ${FOO}
+single quotes with env: ${env.FOO}
+double quotes w/o env: foo
+double quotes with env: foo
+foo
+foo
+foo
+foo
+foo
+
++ ls -la
++ v=total 8
+...
+
++ ls -la
++ v=total 8
+...
+```
+
+#### Common env variables
+- `BUILD_NUMBER` The current build number, such as `153`
+- `BUILD_DISPLAY_NAME` The display name of the current build, which is something like `#153` by default.
+- `JENKINS_HOME` The absolute path of the directory assigned on the master node for Jenkins to store data.
+
+### parameters
+Declarative Pipeline supports parameters out-of-the-box, allowing the Pipeline to accept user-specified parameters at runtime via the parameters directive.
+
+If you configured your pipeline to accept parameters using the Build with Parameters option, those parameters are accessible as members of the params variable.
+
+**There are 6 types of parameters:**
+
+- string
+- text
+- booleanParam
+- choice
+- password
+- file
+
+Assuming that a String parameter named `action` has been configuring in the Jenkinsfile, it can access that parameter via `params.action` or `${params.action}`:
+
+```
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'action', choices: ['deploy', 'rollback'], description: 'Deploy or rollback')
+    }
+    
+    stages {
+    	stage('test') {
+    		steps {
+    			println(params.action)
+    		}
+    	}
+    }
+}
+```
+
+### currentBuild
+
+The currentBuild variable may be used to refer to the currently running build. It has the following properties: 
+
+- `number` build number (integer)
+- `result` typically SUCCESS, UNSTABLE, or FAILURE (may be null for an ongoing build)
+- `currentResult` typically SUCCESS, UNSTABLE, or FAILURE. Will never be null
+- `displayName` normally #123 but sometimes set to, e.g., an SCM commit identifier
+- `projectName` Name of the project of this build, such as foo
+- `description` additional information about the build
+- `id` normally number as a string
+- and more
