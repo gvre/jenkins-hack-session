@@ -1,10 +1,10 @@
-## Global Variables
+== Global Variables
 
-### Overview
+=== Overview
 Global variables are available in Pipeline directly, not as steps. They expose methods and variables to be accessed within your Pipeline 
 script.
  
-### environment
+=== environment
 The environment directive specifies a sequence of key-value pairs which will be defined as environment variables for the all steps, or stage-specific steps, depending on where the environment directive is located within the Pipeline.
 
 Environment variables are accessible from Groovy code as `env.VARNAME` or simply as `VARNAME`. You can write to such properties as well (only using the `env.` prefix): 
@@ -13,7 +13,8 @@ Environment variables are accessible from Groovy code as `env.VARNAME` or simply
 - An `environment` directive defined within a `stage` will only apply the given environment variables to steps within the stage.
 - The `environment` block has a helper method `credentials()` defined which can be used to access pre-defined Credentials by their identifier in the Jenkins environment.
 
-```
+[source,groovy]
+----
 pipeline {
     agent any
     
@@ -62,11 +63,12 @@ pipeline {
         }
     }
 }
-```
+----
 
 **Result**
 
-```
+[source,groovy]
+----
 bar: bar
 single quotes w/o env: ${FOO}
 single quotes with env: ${env.FOO}
@@ -85,14 +87,14 @@ foo
 + ls -la
 + v=total 8
 ...
-```
+----
 
-#### Common env variables
+==== Common env variables
 - `BUILD_NUMBER` The current build number, such as `153`
-- `BUILD_DISPLAY_NAME` The display name of the current build, which is something like `#153` by default.
+- `BUILD_DISPLAY_NAME` The display name of the current build, which is something like `=153` by default.
 - `JENKINS_HOME` The absolute path of the directory assigned on the master node for Jenkins to store data.
 
-### parameters
+=== parameters
 Declarative Pipeline supports parameters out-of-the-box, allowing the Pipeline to accept user-specified parameters at runtime via the parameters directive.
 
 If you configured your pipeline to accept parameters using the Build with Parameters option, those parameters are accessible as members of the params variable.
@@ -108,7 +110,8 @@ If you configured your pipeline to accept parameters using the Build with Parame
 
 Assuming that a String parameter named `action` has been configuring in the Jenkinsfile, it can access that parameter via `params.action` or `${params.action}`:
 
-```
+[source,groovy]
+----
 pipeline {
     agent any
 
@@ -124,9 +127,9 @@ pipeline {
     	}
     }
 }
-```
+----
 
-### currentBuild
+=== currentBuild
 
 The currentBuild variable may be used to refer to the currently running build. It has the following properties: 
 
