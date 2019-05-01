@@ -1,0 +1,81 @@
+== Docker
+
+=== Using an image
+
+Pipeline is designed to easily use Docker images as the execution environment for a single Stage or the entire Pipeline.
+
+[source,groovy]
+----
+pipeline {
+    agent {
+        docker { image 'node:7-alpine' }
+    }
+
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
+----
+
+When the Pipeline executes, Jenkins will automatically start the specified container and execute the defined steps within it:
+
+[source,groovy]
+----
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
+[guided-tour] Running shell script
++ node --version
+v7.4.0
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+----
+
+=== Using a Dockerfile
+[source,groovy]
+----
+pipeline {
+    agent none
+
+    stages {
+        stage('Checkout') {
+            agent any
+            
+            git branch: BRANCH,
+                credentialsId: 'github_ssh',
+                url: 'git@github.com:MyCompany/myproject.git'
+                
+            sh '''
+                sudo rm -rf /tmp/myproject
+                cp -aT . /tmp/myproject
+            '''
+        }
+        
+        stage('Build') {
+            agent {
+                dockerfile {
+                    dir '/tmp/myproject'
+                    filename 'Dockerfile.build'
+                    args '-u root:root \
+                          -w /root/go/src/github.com/MyCompany/myproject \
+                          -v /var/lib/jenkins/.ssh/id_rsa:/root/.ssh/id_rsa \
+                          -v /tmp/myproject:/root/go/src/github.com/MyCompany/myproject:rw'
+                }
+            }
+
+            steps {
+                sh '''
+                    cd /root/go/src/github.com/MyCompany/myproject
+                    go get -d ./...
+                    make
+                '''
+            }
+        }
+    }
+}
+----
