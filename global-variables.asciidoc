@@ -1,9 +1,5 @@
 == Global Variables
 
-=== Overview
-Global variables are available in Pipeline directly, not as steps. They expose methods and variables to be accessed within your Pipeline 
-script.
- 
 === environment
 The environment directive specifies a sequence of key-value pairs which will be defined as environment variables for the all steps, or stage-specific steps, depending on where the environment directive is located within the Pipeline.
 
