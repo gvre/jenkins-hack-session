@@ -7,6 +7,7 @@ A workshop that will get you started with running pipelines on Jenkins.
 https://github.com/gvre/jenkins-hack-session/blob/master/what_is_jenkins.asciidoc[Read more]
 
 ## Step 2: Pipelines
+https://github.com/gvre/jenkins-hack-session/blob/master/pipelines.asciidoc[Read more]
 
 ## Step 3: Global Variables
 https://github.com/gvre/jenkins-hack-session/blob/master/global-variables.asciidoc[Read more]
