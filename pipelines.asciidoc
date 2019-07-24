@@ -15,6 +15,7 @@ Creating a `Jenkinsfile` and committing it to source control provides a number o
 
 While the syntax for defining a Pipeline, either in the web UI or with a `Jenkinsfile` is the same, it is generally considered best practice to define the Pipeline in a `Jenkinsfile` and check that in to source control.
 
+NOTE: Remember: It's easy to get confused with what it is you see in a Jenkinsfile... But it's all just Groovy! 
 
 === Declarative versus Scripted Pipeline syntax
 
@@ -86,11 +87,11 @@ pipeline {
 
 1. Execute this Pipeline or any of its stages, on any available agent.
 2. Defines the "Build" stage.
-3. Perform some steps related to the "Build" stage.
+3. Perform some steps related to the "Build" stage, e.g. compile, link, package, etc.
 4. Defines the "Test" stage.
-5. Perform some steps related to the "Test" stage.
+5. Perform some steps related to the "Test" stage, e.g. run the unit/integration/functional/end-to-end tests
 6. Defines the "Deploy" stage.
-7. Perform some steps related to the "Deploy" stage.
+7. Perform some steps related to the "Deploy" stage, e.g. deploy the tested build artifact to some environment (staging/preprod/production) 
 
 === Scripted Pipeline fundamentals
 
@@ -118,11 +119,11 @@ node { (1)
 
 1. Execute this Pipeline or any of its stages, on any available agent.
 2. Defines the "Build" stage. stage blocks are optional in Scripted Pipeline syntax. However, implementing stage blocks in a Scripted Pipeline provides clearer visualization of each `stage’s subset of tasks/steps in the Jenkins UI.
-3. Perform some steps related to the "Build" stage.
+3. Perform some steps related to the "Build" stage, e.g. compile, link, package, etc.
 4. Defines the "Test" stage.
-5. Perform some steps related to the "Test" stage.
+5. Perform some steps related to the "Test" stage, e.g. run the unit/integration/functional/end-to-end tests
 6. Defines the "Deploy" stage.
-7. Perform some steps related to the "Deploy" stage.
+7. Perform some steps related to the "Deploy" stage, e.g. deploy the tested build artifact to some environment (staging/preprod/production) 
 
 === Pipeline example
 
