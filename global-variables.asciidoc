@@ -47,12 +47,12 @@ pipeline {
                 """
                 
                 sh '''
-                    v="$(ls)"
+                    v="$(ls -al)"
                     echo "ls single quotes multi-line: $v"
                 '''
                 
                 sh """
-                    v="\$(ls)"
+                    v="\$(ls -al)"
                     echo "ls double quotes multi-line: \$v"
                 """
             }
