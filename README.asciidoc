@@ -19,3 +19,4 @@ https://github.com/gvre/jenkins-hack-session/blob/master/credentials.asciidoc[Re
 https://github.com/gvre/jenkins-hack-session/blob/master/docker.asciidoc[Read more]
 
 ## Step 6: Deploy using Ansible
+https://github.com/gvre/jenkins-hack-session/blob/master/ansible.asciidoc[Read more]

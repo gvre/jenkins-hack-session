@@ -1,0 +1,90 @@
+== Deployment
+
+=== Using Ansible
+
+[source,groovy]
+----
+ansiblePlaybook(                        (1)
+    credentialsId: 'server_ssh_key',    (2)
+    inventory: 'path/to/hosts',         (3)
+    playbook:  'path/to/playbook.yml',  (4)
+    extraVars: [                        (5)
+        target:  'target'               (6)
+    ]
+)
+----
+
+1. `ansiblePlaybook` Ansible plugin.
+2. `credentialsId` The Jenkins credentials to use for the SSH connection.
+3. `inventory` Inventory file or host list.
+4. `playbook` The name of the playbook to run.
+5. `extraVars` Extra Variables to pass to the playbook.
+6. `target` The hosts we want to deploy to.
+
+=== Playbook example
+
+[source,groovy]
+----
+
+---
+# Deploy project
+- hosts: localhost
+  gather_facts: False
+  tasks:
+  - name: Get current datetime
+    command: date -u +%Y%m%d-%H%M%S
+    register: datetime
+
+  - name: Create tarball
+    archive:
+      path: "{{ basedir }}/."
+      dest: "/tmp/{{ project }}.tar.gz"
+      format: gz
+
+- hosts: "{{ target }}"
+  gather_facts: False
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+  - name: Create destination directory
+    file:
+      path: "/path/to/{{ project }}-{{ hostvars.localhost.datetime.stdout }}"
+      state: directory
+      mode: 0755
+      owner: apache
+      group: apache
+
+  - name: Extract code
+    unarchive:
+      src: "/tmp/{{ project }}.tar.gz"
+      dest: "/path/to/{{ project }}-{{ hostvars.localhost.datetime.stdout }}"
+      mode: 0755
+      owner: apache
+      group: apache
+
+  - name: Create new link
+    file:
+      src: "/path/to/{{ project }}-{{ hostvars.localhost.datetime.stdout }}"
+      dest: "/path/to/{{ project }}"
+      state: link
+      force: True
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+  - name: Remove local temporary files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ basedir }}"
+      - "/tmp/{{ project }}.tar.gz"
+----
+
+=== Working With Playbooks
+
+Playbooks are Ansible’s configuration, deployment, and orchestration language. They can describe a policy you want your remote systems to enforce, or a set of steps in a general IT process.
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks.html[Read more]
