@@ -20,3 +20,7 @@ https://github.com/gvre/jenkins-hack-session/blob/master/docker.asciidoc[Read mo
 
 ## Step 6: Deploy using Ansible
 https://github.com/gvre/jenkins-hack-session/blob/master/ansible.asciidoc[Read more]
+
+## Sources
+- https://jenkins.io/doc/book/pipeline/
+- https://docs.ansible.com/ansible/latest/user_guide/index.html
