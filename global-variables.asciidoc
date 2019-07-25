@@ -15,7 +15,9 @@ pipeline {
     agent any
     
     environment {
-        FOO="foo"
+        FOO = "foo"
+        AWS_ACCESS_KEY_ID     = credentials('jenkins_aws_secret_key_id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
     }
     
     stages {
@@ -87,7 +89,7 @@ foo
 
 ==== Common env variables
 - `BUILD_NUMBER` The current build number, such as `153`
-- `BUILD_DISPLAY_NAME` The display name of the current build, which is something like `=153` by default.
+- `BUILD_DISPLAY_NAME` The display name of the current build, which is something like `#153` by default.
 - `JENKINS_HOME` The absolute path of the directory assigned on the master node for Jenkins to store data.
 
 === parameters
