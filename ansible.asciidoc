@@ -23,7 +23,7 @@ ansiblePlaybook(                        (1)
 
 === Playbook example
 
-[source,groovy]
+[source,yaml]
 ----
 
 ---
